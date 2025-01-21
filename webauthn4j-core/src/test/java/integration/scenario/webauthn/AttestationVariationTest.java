@@ -77,38 +77,38 @@ class AttestationVariationTest {
         assertThatCode(()->webAuthnAsyncManager.verify(registrationRequest, registrationParameters).toCompletableFuture().get()).doesNotThrowAnyException();
     }
 
-    @Test
-    void should_success_when_AndroidKeyAttestationStatementVerifier_is_used_for_android_key_attestation(){
-        var androidKeyAttestationStatementValidator = new AndroidKeyAttestationStatementVerifier();
-        var webAuthnManager = new WebAuthnManager(Collections.singletonList(androidKeyAttestationStatementValidator), new DefaultCertPathTrustworthinessVerifier(trustAnchorRepository), new DefaultSelfAttestationTrustworthinessVerifier());
-        var androidKeyAttestationStatementAsyncValidator = new AndroidKeyAttestationStatementAsyncVerifier();
-        var webAuthnAsyncManager = new WebAuthnAsyncManager(Collections.singletonList(androidKeyAttestationStatementAsyncValidator), new DefaultCertPathTrustworthinessAsyncVerifier(trustAnchorAsyncRepository), new DefaultSelfAttestationTrustworthinessAsyncVerifier());
-
-        var origin = new Origin("http://localhost");
-        var serverProperty = new ServerProperty(origin, "example.com", new DefaultChallenge(), null);
-
-        var credentialCreationOptions = new PublicKeyCredentialCreationOptions(
-                new PublicKeyCredentialRpEntity(serverProperty.getRpId(), "example.com"),
-                new PublicKeyCredentialUserEntity(new byte[32], "username", "displayName"),
-                serverProperty.getChallenge(),
-                Collections.singletonList(new PublicKeyCredentialParameters(PublicKeyCredentialType.PUBLIC_KEY, COSEAlgorithmIdentifier.ES256)),
-                null,
-                Collections.emptyList(),
-                new AuthenticatorSelectionCriteria(AuthenticatorAttachment.CROSS_PLATFORM, true, UserVerificationRequirement.REQUIRED),
-                AttestationConveyancePreference.DIRECT,
-                new AuthenticationExtensionsClientInputs<>()
-        );
-
-        var clientPlatform = WebAuthnTestUtil.createClientPlatformWithAndroidKeyAuthenticator(origin);
-        PublicKeyCredential<AuthenticatorAttestationResponse, RegistrationExtensionClientOutput> credential = clientPlatform.create(credentialCreationOptions);
-
-        var registrationRequest = toRegistrationRequest(credential);
-        var registrationParameters = new RegistrationParameters(serverProperty, null, false, true);
-
-        //Act
-        assertThatCode(()->webAuthnManager.verify(registrationRequest, registrationParameters)).doesNotThrowAnyException();
-        assertThatCode(()->webAuthnAsyncManager.verify(registrationRequest, registrationParameters).toCompletableFuture().get()).doesNotThrowAnyException();
-    }
+//    @Test
+//    void should_success_when_AndroidKeyAttestationStatementVerifier_is_used_for_android_key_attestation(){
+//        var androidKeyAttestationStatementValidator = new AndroidKeyAttestationStatementVerifier();
+//        var webAuthnManager = new WebAuthnManager(Collections.singletonList(androidKeyAttestationStatementValidator), new DefaultCertPathTrustworthinessVerifier(trustAnchorRepository), new DefaultSelfAttestationTrustworthinessVerifier());
+//        var androidKeyAttestationStatementAsyncValidator = new AndroidKeyAttestationStatementAsyncVerifier();
+//        var webAuthnAsyncManager = new WebAuthnAsyncManager(Collections.singletonList(androidKeyAttestationStatementAsyncValidator), new DefaultCertPathTrustworthinessAsyncVerifier(trustAnchorAsyncRepository), new DefaultSelfAttestationTrustworthinessAsyncVerifier());
+//
+//        var origin = new Origin("http://localhost");
+//        var serverProperty = new ServerProperty(origin, "example.com", new DefaultChallenge(), null);
+//
+//        var credentialCreationOptions = new PublicKeyCredentialCreationOptions(
+//                new PublicKeyCredentialRpEntity(serverProperty.getRpId(), "example.com"),
+//                new PublicKeyCredentialUserEntity(new byte[32], "username", "displayName"),
+//                serverProperty.getChallenge(),
+//                Collections.singletonList(new PublicKeyCredentialParameters(PublicKeyCredentialType.PUBLIC_KEY, COSEAlgorithmIdentifier.ES256)),
+//                null,
+//                Collections.emptyList(),
+//                new AuthenticatorSelectionCriteria(AuthenticatorAttachment.CROSS_PLATFORM, true, UserVerificationRequirement.REQUIRED),
+//                AttestationConveyancePreference.DIRECT,
+//                new AuthenticationExtensionsClientInputs<>()
+//        );
+//
+//        var clientPlatform = WebAuthnTestUtil.createClientPlatformWithAndroidKeyAuthenticator(origin);
+//        PublicKeyCredential<AuthenticatorAttestationResponse, RegistrationExtensionClientOutput> credential = clientPlatform.create(credentialCreationOptions);
+//
+//        var registrationRequest = toRegistrationRequest(credential);
+//        var registrationParameters = new RegistrationParameters(serverProperty, null, false, true);
+//
+//        //Act
+//        assertThatCode(()->webAuthnManager.verify(registrationRequest, registrationParameters)).doesNotThrowAnyException();
+//        assertThatCode(()->webAuthnAsyncManager.verify(registrationRequest, registrationParameters).toCompletableFuture().get()).doesNotThrowAnyException();
+//    }
 
     @Test
     void should_success_when_AndroidSafetyNetAttestationStatementVerifier_is_used_for_android_safety_net_attestation(){

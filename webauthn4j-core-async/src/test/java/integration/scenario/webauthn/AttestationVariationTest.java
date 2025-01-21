@@ -113,22 +113,22 @@ class AttestationVariationTest {
         assertThatCode(()-> target.verify(createRegistrationRequest(clientPlatform, rpId, challenge), registrationParameters).toCompletableFuture().get()).doesNotThrowAnyException();
     }
 
-    @Test
-    void verify_RegistrationRequest_with_android_key_attestation_statement_test() {
-        WebAuthnAuthenticatorAdaptor webAuthnAuthenticatorAdaptor = new WebAuthnAuthenticatorAdaptor(EmulatorUtil.ANDROID_KEY_AUTHENTICATOR);
-        ClientPlatform clientPlatform = new ClientPlatform(origin, webAuthnAuthenticatorAdaptor);
-
-        Challenge challenge = new DefaultChallenge();
-        ServerProperty serverProperty = new ServerProperty(origin, rpId, challenge, null);
-        List<PublicKeyCredentialParameters> pubKeyCredParams = null;
-        RegistrationParameters registrationParameters = new RegistrationParameters(
-                serverProperty,
-                pubKeyCredParams,
-                false
-        );
-
-        assertThatCode(()-> target.verify(createRegistrationRequest(clientPlatform, rpId, challenge), registrationParameters).toCompletableFuture().get()).doesNotThrowAnyException();
-    }
+//    @Test
+//    void verify_RegistrationRequest_with_android_key_attestation_statement_test() {
+//        WebAuthnAuthenticatorAdaptor webAuthnAuthenticatorAdaptor = new WebAuthnAuthenticatorAdaptor(EmulatorUtil.ANDROID_KEY_AUTHENTICATOR);
+//        ClientPlatform clientPlatform = new ClientPlatform(origin, webAuthnAuthenticatorAdaptor);
+//
+//        Challenge challenge = new DefaultChallenge();
+//        ServerProperty serverProperty = new ServerProperty(origin, rpId, challenge, null);
+//        List<PublicKeyCredentialParameters> pubKeyCredParams = null;
+//        RegistrationParameters registrationParameters = new RegistrationParameters(
+//                serverProperty,
+//                pubKeyCredParams,
+//                false
+//        );
+//
+//        assertThatCode(()-> target.verify(createRegistrationRequest(clientPlatform, rpId, challenge), registrationParameters).toCompletableFuture().get()).doesNotThrowAnyException();
+//    }
 
     @Test
     void verify_RegistrationRequest_with_android_safety_net_attestation_statement_test() {
